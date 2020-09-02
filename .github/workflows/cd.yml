@@ -1,0 +1,15 @@
+name: CD
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out target repository
+        uses: actions/checkout@v2
+
+      - name: Clean target
+        run: |
+          rm -rf *.json
+          rm -rf *.wasm
