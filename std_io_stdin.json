@@ -1,1 +1,3 @@
-{"stdin":"Hello, stdin!"}
+{
+  "stdin": "Hello, stdin!"
+}

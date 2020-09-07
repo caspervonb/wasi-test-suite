@@ -1,1 +1,3 @@
-{"stderr":"Hello, stderr!"}
+{
+  "stderr": "Hello, stderr!"
+}

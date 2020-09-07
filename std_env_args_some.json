@@ -1,1 +1,7 @@
-{"args":["one","two","three"]}
+{
+  "args": [
+    "one",
+    "two",
+    "three"
+  ]
+}
