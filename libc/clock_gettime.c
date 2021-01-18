@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdlib.h>
 #include <time.h>
 
 int main() {
@@ -8,4 +9,6 @@ int main() {
   assert(clock_gettime(CLOCK_MONOTONIC, &ts) == 0);
   assert(clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts) == 0);
   assert(clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts) == 0);
+
+  return EXIT_SUCCESS;
 }
