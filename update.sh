@@ -3,17 +3,12 @@ set -e
 
 for name in core libc libstd; do
   rm -rf "$name"
-  rm -rf "wasi-$name-test"
+  git clone "https://github.com/caspervonb/wasi-$name-test" $name
 
-  git clone "https://github.com/caspervonb/wasi-$name-test"
-
-  cd "wasi-$name-test"
-  bash build.sh $name
-  mv out ../$name
-
+  pushd $name
   sha=$(git rev-parse --short HEAD)
   message="Update $name to $sha"
-  cd ..
+  popd
 
   git add -A $name/
   git commit --message "$message" || true

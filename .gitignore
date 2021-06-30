@@ -1,3 +1,11 @@
-wasi-core-test
-wasi-libc-test
-wasi-libstd-test
+core/README.md
+core/build.sh
+core/test.sh
+
+libc/README.md
+libc/build.sh
+libc/test.sh
+
+libstd/README.md
+libstd/build.sh
+libstd/test.sh
