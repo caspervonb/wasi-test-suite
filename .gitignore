@@ -2,6 +2,7 @@
 */.gitmodules
 */.github
 
+*/tools
 */README.md
 */build.sh
 */test.sh
