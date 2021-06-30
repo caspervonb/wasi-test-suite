@@ -1,0 +1,71 @@
+name: ci
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test_wasmer:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Set up assemblyscript
+        run: |
+          npm install -g assemblyscript
+
+      - name: Set up wasmer
+        run: |
+          curl https://get.wasmer.io -sSfL | bash
+          echo "$HOME/.wasmer/bin" >> $GITHUB_PATH
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build tests
+        run: bash build.sh
+
+      - name: Run tests
+        run: bash test.sh wasmer
+
+  test_wasmtime:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Set up assemblyscript
+        run: |
+          npm install -g assemblyscript
+
+      - name: Set up wasmtime
+        run: |
+          curl https://wasmtime.dev/install.sh -sSf | bash
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Build tests
+        run: bash build.sh
+
+      - name: Run tests
+        run: bash test.sh wasmtime
+
