@@ -1,11 +1,7 @@
-core/README.md
-core/build.sh
-core/test.sh
+*/.gitignore
+*/.gitmodules
+*/.github
 
-libc/README.md
-libc/build.sh
-libc/test.sh
-
-libstd/README.md
-libstd/build.sh
-libstd/test.sh
+*/README.md
+*/build.sh
+*/test.sh
