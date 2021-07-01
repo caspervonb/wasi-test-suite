@@ -3,5 +3,5 @@
 #include <string.h>
 
 int main(void) {
-	assert(strcmp(getenv("HELLO"), "WORLD") == 0);
+	assert(strcmp(getenv("PRESENT"), "1") == 0);
 }
