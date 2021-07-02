@@ -85,12 +85,11 @@ jobs:
             'results': results,
           }
 
-          file_path = f'{runtime_name}-{runtime_version}.json'
-          with open(runtime_name + '-' + runtime_version + '.json', 'w', encoding='utf-8') as file:
+          path = f'data.json'
+          with open(path, 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
-      - name: Upload result
+      - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: result
-          path: ./*.json
+          path: data.json
