@@ -1,0 +1,96 @@
+name: run
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        runtime:
+          - deno
+          - node
+          - wasmer
+          - wasmtime
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Clone tools
+        uses: actions/checkout@v2
+        with:
+          repository: caspervonb/wasi-test-tools
+          path: tools
+
+      - name: Setup deno
+        if: matrix.runtime == 'deno'
+        run: |-
+          curl -fsSL https://deno.land/x/install/install.sh | sh
+          echo "$HOME/.deno/bin" >> $GITHUB_PATH
+
+      - name: Setup wasmer
+        if: matrix.runtime == 'wasmer'
+        run: |-
+          curl https://get.wasmer.io -sSfL | sh
+          echo "$HOME/.wasmer/bin" >> $GITHUB_PATH
+
+      - name: Setup wasmtime
+        if: matrix.runtime == 'wasmtime'
+        run: |-
+          curl https://wasmtime.dev/install.sh -sSf | bash
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+
+      - name: Run tests
+        shell: python
+        run: |-
+          import glob
+          import json
+          import subprocess
+          import sys
+          import os
+
+          command = "tools/run-${{ matrix.runtime }}"
+          output = subprocess.check_output([command, "-V"])
+          output = output.decode("utf-8")
+          output = output.rstrip("\n")
+
+          (runtime_name, runtime_version) = tuple(output.split(" "))
+
+          results = []
+          for path in glob.glob("*/*.wasm"):
+              process = subprocess.run(["tools/wasm-test", command, path],
+                      capture_output=True, text=True)
+
+              status = None
+              if process.returncode == 0:
+                  status = "PASS"
+              else:
+                  status = "FAIL"
+
+              message = process.stdout
+
+              results.append({
+                'path': path,
+                'status': status,
+                'message': message,
+              })
+
+          data = {
+            'runtime': {
+                'name': runtime_name,
+                'version': runtime_version,
+            },
+            'results': results,
+          }
+
+          file_path = f'{runtime_name}-{runtime_version}.json'
+          with open(runtime_name + '-' + runtime_version + '.json', 'w', encoding='utf-8') as file:
+            json.dump(data, file, ensure_ascii=False, indent=4)
+
+      - name: Upload result
+        uses: actions/upload-artifact@v2
+        with:
+          name: result
+          path: ./*.json
