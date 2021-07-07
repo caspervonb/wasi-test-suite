@@ -36,9 +36,9 @@ jobs:
         run: |
           git config user.name "Casper Beyer"
           git config user.email "caspervonb@pm.me"
-          git add -A libc
+          git add -A core
           git add -f core/*.wasm
-          git commit -m "Update libc to $(git -C libc rev-parse --short HEAD)"
+          git commit -m "Update core to $(git -C core rev-parse --short HEAD)"
           git push
 
   libc:
