@@ -103,5 +103,5 @@ jobs:
           git config user.email "caspervonb@pm.me"
           git add -A libstd
           git add -f libstd/*.wasm
-          git commit -m "Update libstd to $(git -C libc rev-parse --short HEAD)"
+          git commit -m "Update libstd to $(git -C libstd rev-parse --short HEAD)"
           git push
