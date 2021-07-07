@@ -37,6 +37,7 @@ jobs:
           git config user.name "Casper Beyer"
           git config user.email "caspervonb@pm.me"
           git add -A libc
+          git add -f core/*.wasm
           git commit -m "Update libc to $(git -C libc rev-parse --short HEAD)"
           git push
 
@@ -70,6 +71,7 @@ jobs:
           git config user.name "Casper Beyer"
           git config user.email "caspervonb@pm.me"
           git add -A libc
+          git add -f libc/*.wasm
           git commit -m "Update libc to $(git -C libc rev-parse --short HEAD)"
           git push
 
@@ -100,5 +102,6 @@ jobs:
           git config user.name "Casper Beyer"
           git config user.email "caspervonb@pm.me"
           git add -A libstd
+          git add -f libstd/*.wasm
           git commit -m "Update libstd to $(git -C libc rev-parse --short HEAD)"
           git push
