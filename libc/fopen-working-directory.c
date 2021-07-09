@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 int main() {
-  FILE* file = fopen("../fopen-parent.c", "r");
+  FILE* file = fopen("fopen-working-directory.c", "r");
   assert(file == NULL);
   assert(errno == ENOTCAPABLE);
 
